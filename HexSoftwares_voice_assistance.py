@@ -16,7 +16,7 @@ engine.setProperty('voice', voices[1].id)  # Set the voice to the second voice i
 # Function to speak out the given text
 def talk(text):
     engine.say(text)  
-    engine.runAndWait()  # Run the speech
+    engine.runAndWait() 
 
 # Function to listen for and process voice commands
 def take_command():
@@ -32,34 +32,30 @@ def take_command():
             # If "joe" is detected in the command, remove it
             if 'joe' in command:
                 command = command.replace('joe', '')  
-                talk(command)  # Optionally speak back the command
+                talk(command)  
     except:
         pass  
     
-    return command  # Return the processed command
+    return command 
 
 # Main function to handle the logic for different commands
 def run_alexa():
     command = take_command()  # Get the voice command
-    print(command)  # Print the command for debugging purposes
+    print(command) 
 
-    # If the command contains 'play', play a song on YouTube
     if 'play' in command:
         song = command.replace('play', '')  
-        talk('playing ' + song)  # Tell the user what song is being played
+        talk('playing ' + song)
         pywhatkit.playonyt(song)  
 
-    # If the command contains 'time', tell the current time
-    elif 'time' in command:
+    
         time = datetime.datetime.now().strftime('%I:%M %p')  
-        talk('Current time is ' + time)  # Speak the time
+        talk('Current time is ' + time) 
 
-    # If the command contains 'date', tell the current date
-    elif 'date' in command:   
+    
         date = datetime.datetime.now().strftime('%d:%B:%Y')
-        talk('Current date is ' + date)  # Speak the date
+        talk('Current date is ' + date)  
 
-    # If the command asks for information about a person (starts with 'who is'), get info from Wikipedia
     elif 'who is' in command:
         person = command.replace('who is', '')  
         try:
@@ -68,9 +64,9 @@ def run_alexa():
         except wikipedia.exceptions.DisambiguationError as e:
             talk("The request was too ambiguous. Please be more specific.")  
         except wikipedia.exceptions.PageError:
-            talk("I couldn't find anything on that topic.")  # Handle cases where no page is found
+            talk("I couldn't find anything on that topic.") 
 
-    # If the command asks 'what is', get info from Wikipedia
+    
     elif 'what is' in command:
         whatthe = command.replace('what is', '')  
         try:
@@ -81,38 +77,38 @@ def run_alexa():
         except wikipedia.exceptions.PageError:
             talk("I couldn't find anything on that topic.")  # Handle cases where no page is found
 
-    # If the command asks 'where is', get info from Wikipedia
+    
     elif 'where is' in command:
         location = command.replace('where is', '') 
         try:
             info = wikipedia.summary(location, sentences=2)  # Get a summary of the location from Wikipedia
             talk(info)  
         except wikipedia.exceptions.DisambiguationError as e:
-            talk("The request was too ambiguous. Please be more specific.")  # Handle ambiguous queries
+            talk("The request was too ambiguous. Please be more specific.") 
         except wikipedia.exceptions.PageError:
             talk("I couldn't find anything on that topic.")  
 
-    # If the command asks 'when is', get info from Wikipedia
+    
     elif 'when is' in command:
-        time = command.replace('when is', '')  # Remove 'when is' to extract the event or time
+        time = command.replace('when is', '')  
         try:
             info = wikipedia.summary(time, sentences=2)  
             talk(info)  
         except wikipedia.exceptions.DisambiguationError as e:
             talk("The request was too ambiguous. Please be more specific.")  
         except wikipedia.exceptions.PageError:
-            talk("I couldn't find anything on that topic.")  # Handle cases where no page is found
+            talk("I couldn't find anything on that topic.") 
 
-    # If the command contains 'joke', tell a joke
+    
     elif 'joke' in command:
         talk(pyjokes.get_joke())  # Get a random joke from the pyjokes library and speak it
 
-    # If the command contains 'exit', stop the program
+    
     elif 'exit' in command:
         talk('Goodbye!')  
         exit()  
 
-    # If the command is not recognized, ask the user to repeat
+   
     else:
         talk('I did not get that, please say it again.')
 
