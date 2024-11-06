@@ -3,6 +3,9 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import os
 import webbrowser
+from pyfiglet import Figlet
+
+figlet = Figlet (font = 'slant')
 
 data = []
 file_path = os.path.join('Scraped_Data', 'Books.html')
@@ -68,6 +71,7 @@ def open_scraped_data():
 
 
 # Run the scraping and save functions
+print(figlet.renderText("Welcome to WEB SCRAPER"))
 number_of_pages = int(input("Enter the page number to start scraping from: "))
 Scrape()
 save_data()
